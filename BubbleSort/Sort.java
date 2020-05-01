@@ -45,8 +45,6 @@ public class Sort extends JFrame {
                 array = JTableUtils.readIntArrayFromJTable(arrayTable);
                 states.clear();
                 states = bubbleSort.sort(array);
-                array = states.get(0).getArray();
-                JTableUtils.writeArrayToJTable(arrayTable, array);
                 count = 0;
                 timeField.setValue("0 sec");
                 timer.start();
