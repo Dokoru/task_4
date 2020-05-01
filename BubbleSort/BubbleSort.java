@@ -6,7 +6,8 @@ import java.util.List;
 public class BubbleSort {
 
     public List<SortState> sort(int[] array) {
-        int[] arrayCopy = copy(array);
+        int[] arrayCopy = new int[array.length];
+        System.arraycopy(array, 0, arrayCopy, 0, array.length);
         List<SortState> states = new ArrayList<SortState>();
         states.add(new SortState(arrayCopy, 0, 0));
         int size = array.length;
@@ -28,9 +29,7 @@ public class BubbleSort {
     public int[] copy(int[] array) {
         int size = array.length;
         int[] arrayCopy = new int[size];
-        for (int i = 0; i < size; i++) {
-            arrayCopy[i] = array[i];
-        }
+        System.arraycopy(array, 0, arrayCopy, 0, size);
         return arrayCopy;
     }
 

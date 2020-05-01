@@ -27,7 +27,7 @@ public class Sort extends JFrame {
     private Timer timer;
     private int count;
     private BubbleSort bubbleSort = new BubbleSort();
-    private int time = 0;
+    private int time = -1;
 
     public Sort() {
         this.setTitle("BubbleSort");
@@ -47,9 +47,8 @@ public class Sort extends JFrame {
                 states = bubbleSort.sort(array);
                 array = states.get(0).getArray();
                 JTableUtils.writeArrayToJTable(arrayTable, array);
-                time = 0;
                 count = 0;
-                timeField.setValue(time + " sec");
+                timeField.setValue("0 sec");
                 timer.start();
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
@@ -104,8 +103,8 @@ public class Sort extends JFrame {
         iValue.setText(String.valueOf(i));
         int j = states.get(count).getJ();
         jValue.setText(String.valueOf(j));
-        arrayTable.getColumnModel().getColumn(j).setCellRenderer(new ColorRenderer());
         if (j > 0) {
+            arrayTable.getColumnModel().getColumn(j).setCellRenderer(new ColorRenderer());
             arrayTable.getColumnModel().getColumn(j - 1).setCellRenderer(new ColorRenderer());
         }
     }
