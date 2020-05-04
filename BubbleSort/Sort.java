@@ -4,8 +4,6 @@ import BubbleSort.util.JTableUtils;
 import BubbleSort.util.SwingUtils;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +76,7 @@ public class Sort extends JFrame {
         stopButton.addActionListener(actionEvent -> {
             try {
                 timer.stop();
+                count--;
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }

@@ -32,5 +32,4 @@ public class BubbleSort {
         System.arraycopy(array, 0, arrayCopy, 0, size);
         return arrayCopy;
     }
-
 }
