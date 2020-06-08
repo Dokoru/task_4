@@ -5,31 +5,22 @@ import java.util.List;
 
 public class BubbleSort {
 
-    public List<SortState> sort(int[] array) {
+    public static List<SortState> sort(int[] array) {
         int[] arrayCopy = new int[array.length];
         System.arraycopy(array, 0, arrayCopy, 0, array.length);
         List<SortState> states = new ArrayList<SortState>();
-        states.add(new SortState(arrayCopy, 0, 0));
-        int size = array.length;
+        int size = arrayCopy.length;
         int temp;
         for (int i = 0; i < size; i++) {
             for (int j = 1; j < size - i; j++) {
-                if (array[j - 1] > array[j]) {
-                    temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
+                if (arrayCopy[j - 1] > arrayCopy[j]) {
+                    temp = arrayCopy[j - 1];
+                    arrayCopy[j - 1] = arrayCopy[j];
+                    arrayCopy[j] = temp;
+                    states.add(new SortState(j - 1, j));
                 }
-                arrayCopy = copy(array);
-                states.add(new SortState(arrayCopy, i, j));
             }
         }
         return states;
-    }
-
-    public int[] copy(int[] array) {
-        int size = array.length;
-        int[] arrayCopy = new int[size];
-        System.arraycopy(array, 0, arrayCopy, 0, size);
-        return arrayCopy;
     }
 }

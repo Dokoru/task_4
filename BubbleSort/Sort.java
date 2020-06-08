@@ -4,28 +4,16 @@ import BubbleSort.util.JTableUtils;
 import BubbleSort.util.SwingUtils;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Sort extends JFrame {
     private JTable arrayTable;
     private JPanel mainPanel;
     private JButton forwardButton;
     private JButton backButton;
-    private JLabel labelTime;
-    private JLabel labelI;
-    private JLabel labelJ;
-    private JLabel iValue;
-    private JLabel jValue;
     private JButton stopButton;
-    private JFormattedTextField timeField;
     private JButton startButton;
     private int[] array;
-    private List<SortState> states = new ArrayList<SortState>();
-    private Timer timer;
-    private int count;
-    private BubbleSort bubbleSort = new BubbleSort();
-    private int time = -1;
+    private Player player;
 
     public Sort() {
         this.setTitle("BubbleSort");
@@ -37,15 +25,12 @@ public class Sort extends JFrame {
         arrayTable.setRowHeight(25);
         array = new int[]{9, 6, 1, -1, 10, 7, 0, 5, 3, 1};
         JTableUtils.writeArrayToJTable(arrayTable, array);
+        player = new Player(arrayTable, array, new BubbleSort().sort(array));
 
         startButton.addActionListener(actionEvent -> {
             try {
                 array = JTableUtils.readIntArrayFromJTable(arrayTable);
-                states.clear();
-                states = bubbleSort.sort(array);
-                count = 0;
-                timeField.setValue("0 sec");
-                timer.start();
+                player.start();
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }
@@ -53,10 +38,7 @@ public class Sort extends JFrame {
 
         forwardButton.addActionListener(actionEvent -> {
             try {
-                if (count < states.size() - 1) {
-                    count++;
-                    updateView();
-                }
+                player.forward();
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }
@@ -64,10 +46,7 @@ public class Sort extends JFrame {
 
         backButton.addActionListener(actionEvent -> {
             try {
-                if (count > 0) {
-                    count--;
-                    updateView();
-                }
+                player.back();
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }
@@ -75,34 +54,10 @@ public class Sort extends JFrame {
 
         stopButton.addActionListener(actionEvent -> {
             try {
-                timer.stop();
-                count--;
+                player.stop();
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }
         });
-
-        timer = new Timer(1000, actionEvent -> {
-            if (count < states.size()) {
-                updateView();
-                count++;
-                time++;
-                timeField.setValue(time + " sec");
-            } else {
-                timer.stop();
-            }
-        });
-    }
-
-    public void updateView() {
-        JTableUtils.writeArrayToJTable(arrayTable, states.get(count).getArray());
-        int i = states.get(count).getI();
-        iValue.setText(String.valueOf(i));
-        int j = states.get(count).getJ();
-        jValue.setText(String.valueOf(j));
-        if (j > 0) {
-            arrayTable.getColumnModel().getColumn(j).setCellRenderer(new ColorRenderer());
-            arrayTable.getColumnModel().getColumn(j - 1).setCellRenderer(new ColorRenderer());
-        }
     }
 }
